@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutionException;
 
 public class poltronas extends AppCompatActivity {
     TextView modelo, prefixo;
-    String resp, idVoo, codigo;
+    String resp, idVoo, codigo, aux_usu;
     ListView lstPoltronasParaComprar;
     Poltrona[] objs;
 
@@ -37,6 +37,7 @@ public class poltronas extends AppCompatActivity {
         prefixo.setText(getIntent().getExtras().get("prefixo_aviao").toString());
         idVoo = getIntent().getExtras().get("id_voo").toString();
         codigo  = getIntent().getExtras().get("code_usuario").toString();
+        aux_usu  = getIntent().getExtras().get("aux_usu").toString();
 
         try {
             resp = new PoltronasVooService().execute(idVoo,codigo).get();
@@ -64,6 +65,7 @@ public class poltronas extends AppCompatActivity {
                     i.putExtra("id",idVoo);
                     i.putExtra("poltrona",objs[position].getAssento());
                     i.putExtra("valor",objs[position].getValorPassagem());
+                    i.putExtra("aux_usu",aux_usu.toString());
                     Integer aux = 10;
                     startActivityForResult(i, 1);
                 }

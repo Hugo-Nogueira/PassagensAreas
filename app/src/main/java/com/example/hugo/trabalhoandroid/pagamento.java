@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 
 public class pagamento extends AppCompatActivity {
     TextView mes, ano, tarja, cartao;
-    String valor, resp = "", code, id, poltrona;
+    String valor, resp = "", code, id, poltrona, aux_usu;
     Button pagar;
 
 
@@ -34,6 +34,7 @@ public class pagamento extends AppCompatActivity {
         code = getIntent().getExtras().get("code").toString();
         id = getIntent().getExtras().get("id").toString();
         poltrona = getIntent().getExtras().get("poltrona").toString();
+        aux_usu = getIntent().getExtras().get("aux_usu").toString();
 
         pagar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +77,8 @@ public class pagamento extends AppCompatActivity {
             if (resp.equals("200")){
                 Toast.makeText(getApplicationContext(), "Compra realizada com sucesso!", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(getApplication(), pesquisa_voos.class);
+                i.putExtra("aux_usu", aux_usu);
+                i.putExtra("obj ", aux_usu);
                 startActivityForResult(i, 1);
             }else{
                 Toast.makeText(getApplicationContext(),"Erro no site da operadora. Tente novamente mais tarde!", Toast.LENGTH_LONG).show();
