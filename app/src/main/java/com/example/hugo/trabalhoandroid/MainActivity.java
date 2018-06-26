@@ -56,16 +56,12 @@ public class MainActivity extends AppCompatActivity {
                             telaDoVoltar();
                         }
                 }
-
                 else {
-                limparCampos();
-                nome.setVisibility(View.VISIBLE);
-                login.setVisibility(View.VISIBLE);
-                email.setVisibility(View.VISIBLE);
-                voltar.setVisibility(View.VISIBLE);
-                logar.setVisibility(View.GONE);
-                nome.requestFocus();
-                cadastrando=true;
+                    limparCampos();
+                    setaVisibilidade();
+                    logar.setVisibility(View.GONE);
+                    nome.requestFocus();
+                    cadastrando=true;
                 }
             }
         });
@@ -89,6 +85,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void setaVisibilidade() {
+        nome.setVisibility(View.VISIBLE);
+        login.setVisibility(View.VISIBLE);
+        email.setVisibility(View.VISIBLE);
+        voltar.setVisibility(View.VISIBLE);
     }
 
     private void binding() {
