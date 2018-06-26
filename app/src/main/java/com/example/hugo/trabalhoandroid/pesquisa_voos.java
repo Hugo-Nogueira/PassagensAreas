@@ -92,6 +92,7 @@ public class pesquisa_voos extends AppCompatActivity {
                 i.putExtra("prefixo_aviao", objsFiltrados.get(position).getAviao().getPrefixo().toString());
                 i.putExtra("id_voo", String.valueOf(id));
                 i.putExtra("aux_usu", aux_usu.toString());
+                finish();
                 startActivityForResult(i, 1);
             }
         });

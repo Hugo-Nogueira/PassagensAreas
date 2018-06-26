@@ -49,6 +49,7 @@ public class menuUsuario extends AppCompatActivity {
                 Usuario u = new Usuario();
 
                 i.putExtra("obj", aux);
+                finish();
                 startActivityForResult(i, 1);
             }
         });

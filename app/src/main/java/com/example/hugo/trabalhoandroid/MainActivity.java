@@ -75,14 +75,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     resp = new LoginService().execute(login.getText().toString(),senha.getText().toString()).get();
-                    //limparCampos();
+                    limparCampos();
                     if(!resp.equals("404")) {
                         Intent i = new Intent(getApplication(), menuUsuario.class);
                         i.putExtra("obj", resp);
+                        finish();
                         startActivityForResult(i, 1);
                     }else{
                         Toast.makeText(getApplicationContext(),"Não foi possível fazer login",Toast.LENGTH_LONG).show();
-                        limparCampos();
                     }
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(),"Não foi possível fazer login",Toast.LENGTH_LONG).show();
