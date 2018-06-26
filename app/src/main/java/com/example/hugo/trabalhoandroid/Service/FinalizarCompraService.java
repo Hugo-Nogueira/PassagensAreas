@@ -34,29 +34,7 @@ public class FinalizarCompraService extends AsyncTask<String, Void, String> {
 
             Integer a =  urlConnection.getResponseCode();
 
-            //return a+"";
             return String.valueOf(a);
-
-
-            /*String finalJson = "";
-            if (urlConnection.getResponseCode() == 200) {
-                InputStream responseBody = urlConnection.getInputStream();
-                InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
-                BufferedReader reader = new BufferedReader(responseBodyReader);
-                StringBuffer buffer = new StringBuffer();
-                String line ="";
-
-                while ((line=reader.readLine())!=null){
-                    buffer.append(line);
-                }
-
-                finalJson = buffer.toString();
-            } else {
-                finalJson = urlConnection.getResponseCode()+"";
-            }
-
-            return finalJson;
-            */
 
         } catch (MalformedURLException e) {
             return "Erro1: "+e.getMessage();

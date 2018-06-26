@@ -30,10 +30,6 @@ public class AllVoosService extends AsyncTask<String, Void, String> {
             urlConnection.setRequestProperty("code", param[0]);
             urlConnection.setRequestProperty("X-Environment", "android");
 
-
-            //urlConnection.setDoOutput(true);
-            //urlConnection.getOutputStream().write(login_.getBytes());
-
             urlConnection.connect();
 
             String finalJson = "";

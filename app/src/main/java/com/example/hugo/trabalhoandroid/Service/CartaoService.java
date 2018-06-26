@@ -30,8 +30,6 @@ public class CartaoService extends AsyncTask<String, Void, String> {
 
             urlConnection.connect();
 
-            Integer a =  urlConnection.getResponseCode();
-
             String finalJson = "";
             if (urlConnection.getResponseCode() == 200) {
                 InputStream responseBody = urlConnection.getInputStream();

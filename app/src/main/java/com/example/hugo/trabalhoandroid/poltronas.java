@@ -31,13 +31,9 @@ public class poltronas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poltronas);
-        binding();
 
-        modelo.setText(getIntent().getExtras().get("modelo_aviao").toString());
-        prefixo.setText(getIntent().getExtras().get("prefixo_aviao").toString());
-        idVoo = getIntent().getExtras().get("id_voo").toString();
-        codigo  = getIntent().getExtras().get("code_usuario").toString();
-        aux_usu  = getIntent().getExtras().get("aux_usu").toString();
+        binding();
+        preencheDados();
 
         try {
             resp = new PoltronasVooService().execute(idVoo,codigo).get();
@@ -73,6 +69,14 @@ public class poltronas extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void preencheDados() {
+        modelo.setText(getIntent().getExtras().get("modelo_aviao").toString());
+        prefixo.setText(getIntent().getExtras().get("prefixo_aviao").toString());
+        idVoo = getIntent().getExtras().get("id_voo").toString();
+        codigo  = getIntent().getExtras().get("code_usuario").toString();
+        aux_usu  = getIntent().getExtras().get("aux_usu").toString();
     }
 
     private void binding() {

@@ -29,20 +29,15 @@ public class pagamento extends AppCompatActivity {
         setContentView(R.layout.activity_pagamento);
 
         binding();
-
-        valor = getIntent().getExtras().get("valor").toString();
-        code = getIntent().getExtras().get("code").toString();
-        id = getIntent().getExtras().get("id").toString();
-        poltrona = getIntent().getExtras().get("poltrona").toString();
-        aux_usu = getIntent().getExtras().get("aux_usu").toString();
+        preencheObjs();
 
         pagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
 
-                    if( mes.getText().length() < 2   || ano.getText().length() < 4 ||
-                        tarja.getText().length() < 3 || cartao.getText().length() < 16 ){
+                    if( mes.getText().length() != 2   || ano.getText().length() != 4 ||
+                        tarja.getText().length() != 3 || cartao.getText().length() != 16 ){
                         Toast.makeText(getApplicationContext(), "ATENÇÃO: Dados inválidos!\nVerifique os dados e tente novamente.", Toast.LENGTH_LONG).show();
                     }else {
                         resp = new CartaoService().execute(cartao.getText().toString(), mes.getText().toString(), ano.getText().toString(), tarja.getText().toString(), valor).get();
@@ -62,12 +57,16 @@ public class pagamento extends AppCompatActivity {
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
-
             }
-
-
         });
+    }
 
+    private void preencheObjs() {
+        valor = getIntent().getExtras().get("valor").toString();
+        code = getIntent().getExtras().get("code").toString();
+        id = getIntent().getExtras().get("id").toString();
+        poltrona = getIntent().getExtras().get("poltrona").toString();
+        aux_usu = getIntent().getExtras().get("aux_usu").toString();
     }
 
     private void darBaixaNoSistema(String code, String id, String poltrona) {

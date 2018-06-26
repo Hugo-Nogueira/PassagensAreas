@@ -29,19 +29,15 @@ public class pesquisa_voos extends AppCompatActivity {
     Button btnPesquisar;
     String aux_usu, resp = "", aux, data;
     ArrayList<Voo> objsFiltrados = new ArrayList<Voo>();
-
-
+    Usuario user = new Usuario(); //não saquei porque estava com final
+    Gson gson = new Gson();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesquisa_voos);
 
         binding();
-
-        aux_usu = (String) getIntent().getExtras().get("obj");
-        Gson gson = new Gson();
-        final Usuario user = gson.fromJson(aux_usu, Usuario.class);
-
+        preencheObjs();
 
         btnPesquisar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,9 +45,7 @@ public class pesquisa_voos extends AppCompatActivity {
                 try {
                     resp = new AllVoosService().execute(user.getToken()).get();
 
-                    Gson gson = new Gson();
                     Voo[] objs = gson.fromJson(resp, Voo[].class);
-
 
                     if (data_digitada.getText().toString().length()!=10){
                         Toast.makeText(getApplicationContext(), "Formato da data inválido.", Toast.LENGTH_LONG).show();
@@ -97,6 +91,12 @@ public class pesquisa_voos extends AppCompatActivity {
             }
         });
     }
+
+    private void preencheObjs() {
+        aux_usu = (String) getIntent().getExtras().get("obj");
+        user = gson.fromJson(aux_usu, Usuario.class);
+    }
+
     private void binding() {
         origem = findViewById(R.id.edtPesquisarOrigem);
         destino = findViewById(R.id.edtPesquisarDestino);

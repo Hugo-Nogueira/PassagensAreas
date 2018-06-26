@@ -37,50 +37,43 @@ public class menuUsuario extends AppCompatActivity {
         setContentView(R.layout.activity_menu_usuario);
 
         binding();
+        preencheObjs();
 
-        aux = (String) getIntent().getExtras().get("obj");
-        token = aux.substring(aux.indexOf("token")+8,aux.indexOf("}")-1);
-        id = aux.substring(aux.indexOf("id")+4,aux.indexOf("nome")-2);
-
+        //botão pesquisa
         vPesquisa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplication(), pesquisa_voos.class);
-                Usuario u = new Usuario();
-
                 i.putExtra("obj", aux);
-                //finish();
                 startActivityForResult(i, 1);
             }
         });
-
+        //botão visualizar passagens compradas
         vComprados.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 try {
                     resp = new UsuarioService().execute(id, token).get();
-
+                    //cria o UsuarioPoltrona pelo Gson: Este obj contem uma lista de pltronas
                     Gson gson = new Gson();
                     UsuarioPoltrona objs = gson.fromJson(resp, UsuarioPoltrona.class);
-
-                    List<Poltrona> poltronas = new ArrayList<Poltrona>();
-                    poltronas = objs.getPoltronas();
-
+                    //cria o adapter, passa as poltronas para a lista, seta a visibilidade e o adapter
+                    PassagensCompradasAdapter adapter = new PassagensCompradasAdapter(getApplicationContext(), objs.getPoltronas());
                     lst.setVisibility(View.VISIBLE);
-                    PassagensCompradasAdapter adapter = new PassagensCompradasAdapter(getApplicationContext(), poltronas);
                     lst.setAdapter(adapter);
-
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
-
-
             }
         });
+    }
 
+    private void preencheObjs() {
+        aux = (String) getIntent().getExtras().get("obj");
+        token = aux.substring(aux.indexOf("token")+8,aux.indexOf("}")-1);
+        id = aux.substring(aux.indexOf("id")+4,aux.indexOf("nome")-2);
     }
 
     private void binding() {
