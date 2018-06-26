@@ -14,7 +14,6 @@ import com.example.hugo.trabalhoandroid.Service.AllVoosService;
 import com.example.hugo.trabalhoandroid.Service.LoginService;
 import com.example.hugo.trabalhoandroid.Service.PoltronasVooService;
 import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -92,6 +91,7 @@ public class menuUsuario extends AppCompatActivity {
                     maiorAviao=vetVoo[i].getAviao().getCapacidade();
                 }
             }
+
 
             Toast.makeText(getApplicationContext(), maiorAviao+"", Toast.LENGTH_LONG).show();
 

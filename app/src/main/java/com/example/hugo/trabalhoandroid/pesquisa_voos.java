@@ -61,7 +61,7 @@ public class pesquisa_voos extends AppCompatActivity {
                              aux = objs[i].getDataVoo();
                              data = aux.substring(0,10);
                              if (objs[i].getDestino().getCidade().equals(destino.getText().toString()) && objs[i].getOrigem().getCidade().equals(origem.getText().toString()) && data.equals(data_digitada.getText().toString())){
-                                objsFiltrados.add(objs[i]);
+                                objsFiltrados.add(objs[i]);//
                              }
                         }
                     }
