@@ -19,11 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".menuUsuario" />
-        <activity android:name=".voosComprados" />
         <activity android:name=".pesquisa_voos" />
         <activity android:name=".pagamento" />
         <activity android:name=".poltronas" />
-        <activity android:name=".compraPoltrona"></activity>
     </application>
 
 </manifest>

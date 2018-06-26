@@ -79,7 +79,7 @@ public class pagamento extends AppCompatActivity {
                 Intent i = new Intent(getApplication(), pesquisa_voos.class);
                 i.putExtra("aux_usu", aux_usu);
                 i.putExtra("obj ", aux_usu);
-                finish();
+                //finish();
                 startActivityForResult(i, 1);
             }else{
                 Toast.makeText(getApplicationContext(),"Erro no site da operadora. Tente novamente mais tarde!", Toast.LENGTH_LONG).show();

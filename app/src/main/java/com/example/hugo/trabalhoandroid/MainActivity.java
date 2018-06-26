@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     if(!resp.equals("404")) {
                         Intent i = new Intent(getApplication(), menuUsuario.class);
                         i.putExtra("obj", resp);
-                        finish();
+                        //finish();
                         startActivityForResult(i, 1);
                     }else{
                         Toast.makeText(getApplicationContext(),"Não foi possível fazer login",Toast.LENGTH_LONG).show();

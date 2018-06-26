@@ -67,7 +67,7 @@ public class poltronas extends AppCompatActivity {
                     i.putExtra("valor",objs[position].getValorPassagem());
                     i.putExtra("aux_usu",aux_usu.toString());
                     Integer aux = 10;
-                    finish();
+                    //finish();
                     startActivityForResult(i, 1);
                 }
             }
