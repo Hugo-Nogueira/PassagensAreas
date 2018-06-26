@@ -5,16 +5,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hugo.trabalhoandroid.Model.Poltrona;
 import com.example.hugo.trabalhoandroid.Model.Usuario;
+import com.example.hugo.trabalhoandroid.Model.UsuarioPoltrona;
 import com.example.hugo.trabalhoandroid.Model.Voo;
 import com.example.hugo.trabalhoandroid.Service.AllVoosService;
 import com.example.hugo.trabalhoandroid.Service.LoginService;
 import com.example.hugo.trabalhoandroid.Service.PoltronasVooService;
+import com.example.hugo.trabalhoandroid.Service.UsuarioService;
+import com.example.hugo.trabalhoandroid.View.PassagensCompradasAdapter;
+import com.example.hugo.trabalhoandroid.View.VooAdapter;
 import com.google.gson.Gson;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class menuUsuario extends AppCompatActivity {
@@ -22,10 +29,7 @@ public class menuUsuario extends AppCompatActivity {
     TextView teste;
     String aux, token, id, resp ="";
     Button vComprados, vPesquisa;
-    Integer maiorAviao = 0;
-    Voo[] vetVoo;
-    String [] vetResp = new String[50];
-
+    ListView lst;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,59 +56,36 @@ public class menuUsuario extends AppCompatActivity {
         vComprados.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EncontrarQtdDosVoosEMaiorAviao();
-                EncontrarIdDasPoltronas();
+
+                try {
+                    resp = new UsuarioService().execute(id, token).get();
+
+                    Gson gson = new Gson();
+                    UsuarioPoltrona objs = gson.fromJson(resp, UsuarioPoltrona.class);
+
+                    List<Poltrona> poltronas = new ArrayList<Poltrona>();
+                    poltronas = objs.getPoltronas();
+
+                    lst.setVisibility(View.VISIBLE);
+                    PassagensCompradasAdapter adapter = new PassagensCompradasAdapter(getApplicationContext(), poltronas);
+                    lst.setAdapter(adapter);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         });
 
-    }
-
-    private Integer[][] EncontrarIdDasPoltronas() {
-        Integer idDasPoltronas[][] = new Integer[maiorAviao][vetVoo.length];
-
-        try {
-
-            for (Integer i = 0; i < vetVoo.length-1 ;i++ ) {
-                resp = new PoltronasVooService().execute(token, vetVoo[i].getId().toString()).get();
-                vetResp[i] = resp;
-            }
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        return idDasPoltronas;
-    }
-
-    private void EncontrarQtdDosVoosEMaiorAviao() {
-        try {
-            resp = new AllVoosService().execute(token).get();
-
-            Gson gson = new Gson();
-            vetVoo = gson.fromJson(resp, Voo[].class);
-
-
-            for (int i = 0; i < vetVoo.length; i++){
-                if (vetVoo[i].getAviao().getCapacidade()>maiorAviao){
-                    maiorAviao=vetVoo[i].getAviao().getCapacidade();
-                }
-            }
-
-
-            Toast.makeText(getApplicationContext(), maiorAviao+"", Toast.LENGTH_LONG).show();
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
     }
 
     private void binding() {
         teste = findViewById(R.id.tvMenuUsuario);
         vComprados = findViewById(R.id.btnMenuUsuarioPassagensCompradas);
         vPesquisa = findViewById(R.id.btnMenuUsuarioBuscarVoos);
+        lst = findViewById(R.id.lstMenuUsuario);
     }
 }
