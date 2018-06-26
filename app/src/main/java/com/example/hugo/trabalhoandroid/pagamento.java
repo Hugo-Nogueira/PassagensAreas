@@ -40,16 +40,21 @@ public class pagamento extends AppCompatActivity {
             public void onClick(View v) {
                 try {
 
-                    resp = new CartaoService().execute(cartao.getText().toString(),mes.getText().toString(),ano.getText().toString(),tarja.getText().toString(),valor).get();
-
-                    Gson gson = new Gson();
-                    Cartao obj = gson.fromJson(resp, Cartao.class);
-
-                    if (obj.getStatus().equals("APROVADO")){
-                        darBaixaNoSistema(code,id,poltrona);
-
+                    if( mes.getText().length() < 2   || ano.getText().length() < 4 ||
+                        tarja.getText().length() < 3 || cartao.getText().length() < 16 ){
+                        Toast.makeText(getApplicationContext(), "ATENÇÃO: Dados inválidos!\nVerifique os dados e tente novamente.", Toast.LENGTH_LONG).show();
                     }else {
-                        Toast.makeText(getApplicationContext(), "Cartão reprovado", Toast.LENGTH_SHORT).show();
+                        resp = new CartaoService().execute(cartao.getText().toString(), mes.getText().toString(), ano.getText().toString(), tarja.getText().toString(), valor).get();
+
+                        Gson gson = new Gson();
+                        Cartao obj = gson.fromJson(resp, Cartao.class);
+
+                        if (obj.getStatus().equals("APROVADO")) {
+                            darBaixaNoSistema(code, id, poltrona);
+                        }
+                        if(obj.getStatus().equals("REPROVADO")){
+                            Toast.makeText(getApplicationContext(), "Cartão reprovado", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -72,10 +77,10 @@ public class pagamento extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Compra realizada com sucesso!", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(getApplication(), pesquisa_voos.class);
                 startActivityForResult(i, 1);
+            }else{
+                Toast.makeText(getApplicationContext(),"Erro no site da operadora. Tente novamente mais tarde!", Toast.LENGTH_LONG).show();
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

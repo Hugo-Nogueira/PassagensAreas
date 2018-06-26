@@ -34,7 +34,9 @@ public class FinalizarCompraService extends AsyncTask<String, Void, String> {
 
             Integer a =  urlConnection.getResponseCode();
 
-            return a+"";
+            //return a+"";
+            return String.valueOf(a);
+
 
             /*String finalJson = "";
             if (urlConnection.getResponseCode() == 200) {
