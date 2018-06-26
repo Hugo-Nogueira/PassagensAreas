@@ -43,7 +43,7 @@ public class PassagensCompradasAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView assento, origem, destino, data, valor, aviao;
 
-        View view = layout.inflate(R.layout.cadeirastemplate, parent,false);
+        View view = layout.inflate(R.layout.passagenscompradaslayout, parent,false);
 
         assento = view.findViewById(R.id.txtPgPassAssento);
         origem = view.findViewById(R.id.txtPgPassOrigem);
@@ -54,12 +54,12 @@ public class PassagensCompradasAdapter extends BaseAdapter{
 
         Poltrona obj = (Poltrona) getItem(position);
 
-        assento.setText("Assento: "+obj.getAssento().toString());
-        origem.setText("Origem: "+obj.getOrigem().toString());
-        destino.setText("Destino: "+obj.getDestino().toString());
-        data.setText("Data: "+obj.getDataVoo().toString());
-        valor.setText("Valor: "+obj.getValorPassagem().toString());
-        aviao.setText("Avião: "+obj.getAviao().toString());
+        assento.setText("Assento: " + Integer.toString(obj.getAssento()));
+        origem.setText("Origem: "+obj.getOrigem());
+        destino.setText("Destino: "+obj.getDestino());
+        data.setText("Data: "+obj.getDataVoo());
+        valor.setText("Valor: "+ String.valueOf(obj.getValorPassagem()));
+        aviao.setText("Avião: "+obj.getAviao());
 
         return view;
     }
